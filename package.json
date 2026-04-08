@@ -1,0 +1,19 @@
+{
+  "name": "echo-avatar-frontend",
+  "version": "1.0.0",
+  "description": "Frontend application for Echo Avatar",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {},
+  "license": "MIT"
+}

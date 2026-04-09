@@ -5,7 +5,7 @@ import { useState } from "react";
 const PREMADE_AVATARS = [
   "/avatars_images/avatar1.jpg",
   "/avatars_images/avatar2.jpg",
-  "/avatars_images/avatar3.png",
+  "/avatars_images/avatar3.jpg",
   "/avatars_images/avatar4.jpg",
 ];
 

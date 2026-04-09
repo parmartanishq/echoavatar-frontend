@@ -23,6 +23,9 @@ export default function Home() {
   const [videoUrl, setVideoUrl] = useState(null);
   const [error, setError] = useState(null);
 
+  const API_BASE_URL =
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
   const handleSelectPremadeAvatar = async (imagePath) => {
     try {
       const response = await fetch(imagePath);
@@ -50,13 +53,10 @@ export default function Home() {
     formData.append("voice_gender", voiceGender);
 
     try {
-      const response = await fetch(
-        "http://localhost:8000/api/v1/generate-audio",
-        {
-          method: "POST",
-          body: formData,
-        },
-      );
+      const response = await fetch(`${API_BASE_URL}/api/v1/generate-audio`, {
+        method: "POST",
+        body: formData,
+      });
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
@@ -89,13 +89,10 @@ export default function Home() {
     formData.append("topic", aiPrompt);
 
     try {
-      const response = await fetch(
-        "http://localhost:8000/api/v1/generate-script",
-        {
-          method: "POST",
-          body: formData,
-        },
-      );
+      const response = await fetch(`${API_BASE_URL}/api/v1/generate-script`, {
+        method: "POST",
+        body: formData,
+      });
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
@@ -150,7 +147,7 @@ export default function Home() {
 
     try {
       // Send the request to our local FastAPI backend
-      const response = await fetch("http://localhost:8000/api/v1/generate", {
+      const response = await fetch(`${API_BASE_URL}/api/v1/generate`, {
         method: "POST",
         body: formData,
       });
@@ -175,16 +172,57 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-slate-50 py-10 sm:py-16 px-4 sm:px-6 lg:px-8 font-sans selection:bg-blue-200">
       <div className="max-w-5xl mx-auto">
-        {/* Header Section */}
-        <div className="text-center mb-10 sm:mb-16">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-4 pb-1 tracking-tight">
+        {/* Header / Landing Section */}
+        <div className="text-center mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-semibold tracking-wide uppercase mb-6">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+            </span>
+            v1.0 Live
+          </div>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-6 pb-1 tracking-tight">
             EchoAvatar AI
           </h1>
-          <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
-            Bring static images to life with highly realistic AI lip-syncing.
-            Upload a face, add your audio or script, and generate stunning video
-            in minutes.
+          <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed mb-10">
+            The ultimate AI video generation tool. Transform any static image
+            into a dynamic, speaking avatar using state-of-the-art Wav2Lip
+            technology, ultra-realistic Text-to-Speech, and Google Gemini AI.
           </p>
+
+          {/* Features Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto text-left">
+            <div className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-4">📸</div>
+              <h3 className="text-lg font-bold text-slate-800 mb-2">
+                Flawless Lip-Sync
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Upload a portrait or choose from our gallery. Our AI perfectly
+                synchronizes the lips of your image to match any audio input.
+              </p>
+            </div>
+            <div className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-4">🎙️</div>
+              <h3 className="text-lg font-bold text-slate-800 mb-2">
+                Studio-Quality TTS
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Upload an audio file or type a script to use our ultra-realistic
+                AI voices for your avatar.
+              </p>
+            </div>
+            <div className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-4">✨</div>
+              <h3 className="text-lg font-bold text-slate-800 mb-2">
+                Powered by Gemini
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                No script? No problem. Enter a topic and let Google Gemini
+                instantly draft an engaging message for your avatar.
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="bg-white rounded-3xl shadow-xl ring-1 ring-slate-900/5 overflow-hidden p-6 sm:p-10">
